@@ -614,17 +614,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d87b4dffec6fb244bc49367435e39ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomEnemySpawner
-  rules:
-  - enemyPrefab: {fileID: 1863452833870030615, guid: bc02eec580d733c44858ffc2267e5caf, type: 3}
-    min: 1
-    max: 1
-    startState: 1
-    chance: 1
-  spawnPointsRoot: {fileID: 3396622858623226604}
-  patrolPathsRoot: {fileID: 4456031786338460452}
-  snapToNavMesh: 1
-  navSampleRadius: 1
-  spawnVFX: {fileID: 0}
+  spawnPoints:
+  - {fileID: 4299653323133738390}
+  spawnOnLoad: 1
 --- !u!1 &2496707005554891039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,6 +2120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4813588138237564079}
+  - component: {fileID: 4299653323133738390}
   m_Layer: 0
   m_Name: Spawn1
   m_TagString: Untagged
@@ -2150,6 +2143,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3396622858623226604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4299653323133738390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9066158018672683213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f2e7c4defc7ef43bf62b388bb0380f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPointController
+  rule:
+    chance: 1
+    startState: 1
+    patrolPathRoot: {fileID: 3454506710491815520}
+    enemies:
+    - enemyPrefab: {fileID: 1863452833870030615, guid: bc02eec580d733c44858ffc2267e5caf, type: 3}
+      weight: 100
+  snapToNavMesh: 1
+  navSampleRadius: 1
+  spawnVFX: {fileID: 8210342783702244756, guid: 406d0ddcd8d255d4381c2bfbe341eb10, type: 3}
 --- !u!1001 &73335585051781726
 PrefabInstance:
   m_ObjectHideFlags: 0

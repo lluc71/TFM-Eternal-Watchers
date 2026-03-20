@@ -24,7 +24,6 @@ public class Room : MonoBehaviour
     public GameObject doorWestVisual;
 
     [Header("Spawns")]
-    [Tooltip("If assigned, enemies spawn when the room is instantiated.")]
     [SerializeField] private RoomEnemySpawner enemySpawner;
 
     public bool IsAllowed(DoorDir dir) => dir switch
@@ -72,11 +71,14 @@ public class Room : MonoBehaviour
         if (doorWestVisual) doorWestVisual.SetActive(!west);
     }
 
-    public void TrySpawnEnemies()
+    public void TrySpawnEnemiesOnLoad()
     {
         if (!enemySpawner) return;
 
-        enemySpawner.TrySpawnEnemies();
+        if (enemySpawner.isSpawnOnLoad())
+        {
+            enemySpawner.TrySpawnEnemies();
+        }
     }
 
     private void OnDrawGizmosSelected()

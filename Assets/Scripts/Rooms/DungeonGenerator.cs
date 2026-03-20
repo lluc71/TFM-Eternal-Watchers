@@ -433,7 +433,7 @@ public class DungeonGenerator : MonoBehaviour
         {
             if (room == null) continue;
 
-            room.TrySpawnEnemies();
+            room.TrySpawnEnemiesOnLoad();
         }
     }
 }

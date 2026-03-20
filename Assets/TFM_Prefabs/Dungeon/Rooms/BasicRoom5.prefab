@@ -226,6 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9157960737623713618}
+  - component: {fileID: 289505504459354656}
   m_Layer: 0
   m_Name: Spawn1
   m_TagString: Untagged
@@ -248,6 +249,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6340861426195305513}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &289505504459354656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540958081570032874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f2e7c4defc7ef43bf62b388bb0380f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPointController
+  rule:
+    chance: 0.75
+    startState: 0
+    patrolPathRoot: {fileID: 0}
+    enemies:
+    - enemyPrefab: {fileID: 9036194338941084516, guid: 0cf509bd16c636d45b15cd038ee71412, type: 3}
+      weight: 100
+  snapToNavMesh: 1
+  navSampleRadius: 1
+  spawnVFX: {fileID: 8210342783702244756, guid: 406d0ddcd8d255d4381c2bfbe341eb10, type: 3}
 --- !u!1 &653337015889229918
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,6 +474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6879085353300718757}
+  - component: {fileID: 9038713466165480522}
   m_Layer: 0
   m_Name: Spawn2
   m_TagString: Untagged
@@ -473,6 +497,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6340861426195305513}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9038713466165480522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186029172443921735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f2e7c4defc7ef43bf62b388bb0380f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPointController
+  rule:
+    chance: 1
+    startState: 1
+    patrolPathRoot: {fileID: 5512040288857997841}
+    enemies:
+    - enemyPrefab: {fileID: 9036194338941084516, guid: 0cf509bd16c636d45b15cd038ee71412, type: 3}
+      weight: 33
+    - enemyPrefab: {fileID: 1863452833870030615, guid: bc02eec580d733c44858ffc2267e5caf, type: 3}
+      weight: 33
+    - enemyPrefab: {fileID: 404000101795920859, guid: 98a42b970f691114c9b61abe8e0f3b3b, type: 3}
+      weight: 33
+  snapToNavMesh: 1
+  navSampleRadius: 1
+  spawnVFX: {fileID: 8210342783702244756, guid: 406d0ddcd8d255d4381c2bfbe341eb10, type: 3}
 --- !u!1 &1213172014544481448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,6 +1607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2929410194840096272}
+  - component: {fileID: 2855894501821384595}
   m_Layer: 0
   m_Name: Spawn3
   m_TagString: Untagged
@@ -1579,6 +1630,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6340861426195305513}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2855894501821384595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536596049179730965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f2e7c4defc7ef43bf62b388bb0380f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPointController
+  rule:
+    chance: 1
+    startState: 1
+    patrolPathRoot: {fileID: 6516692792514445588}
+    enemies:
+    - enemyPrefab: {fileID: 9036194338941084516, guid: 0cf509bd16c636d45b15cd038ee71412, type: 3}
+      weight: 33
+    - enemyPrefab: {fileID: 1863452833870030615, guid: bc02eec580d733c44858ffc2267e5caf, type: 3}
+      weight: 33
+    - enemyPrefab: {fileID: 404000101795920859, guid: 98a42b970f691114c9b61abe8e0f3b3b, type: 3}
+      weight: 33
+  snapToNavMesh: 1
+  navSampleRadius: 1
+  spawnVFX: {fileID: 8210342783702244756, guid: 406d0ddcd8d255d4381c2bfbe341eb10, type: 3}
 --- !u!1 &5577681487868229401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2203,7 +2280,7 @@ MonoBehaviour:
   doorSouthVisual: {fileID: 8650912059108649552}
   doorEastVisual: {fileID: 5257596525719411865}
   doorWestVisual: {fileID: 5393339194690379469}
-  enemySpawner: {fileID: 0}
+  enemySpawner: {fileID: 4676524914632878244}
 --- !u!114 &4676524914632878244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2216,27 +2293,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d87b4dffec6fb244bc49367435e39ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomEnemySpawner
-  rules:
-  - enemyPrefab: {fileID: 404000101795920859, guid: 98a42b970f691114c9b61abe8e0f3b3b, type: 3}
-    min: 0
-    max: 2
-    startState: 1
-    chance: 0.5
-  - enemyPrefab: {fileID: 1863452833870030615, guid: bc02eec580d733c44858ffc2267e5caf, type: 3}
-    min: 0
-    max: 2
-    startState: 1
-    chance: 0.5
-  - enemyPrefab: {fileID: 9036194338941084516, guid: 0cf509bd16c636d45b15cd038ee71412, type: 3}
-    min: 0
-    max: 3
-    startState: 1
-    chance: 1
-  spawnPointsRoot: {fileID: 6340861426195305513}
-  patrolPathsRoot: {fileID: 7129201902900310652}
-  snapToNavMesh: 1
-  navSampleRadius: 1
-  spawnVFX: {fileID: 8210342783702244756, guid: 406d0ddcd8d255d4381c2bfbe341eb10, type: 3}
+  spawnPoints:
+  - {fileID: 289505504459354656}
+  - {fileID: 9038713466165480522}
+  - {fileID: 2855894501821384595}
+  spawnOnLoad: 0
 --- !u!1 &8347118438442428762
 GameObject:
   m_ObjectHideFlags: 0

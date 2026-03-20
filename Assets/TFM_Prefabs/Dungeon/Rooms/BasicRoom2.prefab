@@ -169,6 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2985596441163566828}
+  - component: {fileID: 6375718878132649226}
   m_Layer: 0
   m_Name: Spawn1
   m_TagString: Untagged
@@ -191,6 +192,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8537685671143535471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6375718878132649226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862521433394507568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f2e7c4defc7ef43bf62b388bb0380f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPointController
+  rule:
+    chance: 1
+    startState: 1
+    patrolPathRoot: {fileID: 8921797826063201185}
+    enemies:
+    - enemyPrefab: {fileID: 9036194338941084516, guid: 0cf509bd16c636d45b15cd038ee71412, type: 3}
+      weight: 30
+    - enemyPrefab: {fileID: 1863452833870030615, guid: bc02eec580d733c44858ffc2267e5caf, type: 3}
+      weight: 50
+    - enemyPrefab: {fileID: 404000101795920859, guid: 98a42b970f691114c9b61abe8e0f3b3b, type: 3}
+      weight: 20
+  snapToNavMesh: 1
+  navSampleRadius: 1
+  spawnVFX: {fileID: 8210342783702244756, guid: 406d0ddcd8d255d4381c2bfbe341eb10, type: 3}
 --- !u!1 &865445531212849544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,6 +1486,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2191514618788929824}
+  - component: {fileID: 1266306117953325859}
   m_Layer: 0
   m_Name: Spawn2
   m_TagString: Untagged
@@ -1481,6 +1509,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8537685671143535471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1266306117953325859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6871661445169849625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f2e7c4defc7ef43bf62b388bb0380f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnPointController
+  rule:
+    chance: 1
+    startState: 1
+    patrolPathRoot: {fileID: 6785396784186666374}
+    enemies:
+    - enemyPrefab: {fileID: 9036194338941084516, guid: 0cf509bd16c636d45b15cd038ee71412, type: 3}
+      weight: 30
+    - enemyPrefab: {fileID: 1863452833870030615, guid: bc02eec580d733c44858ffc2267e5caf, type: 3}
+      weight: 50
+    - enemyPrefab: {fileID: 404000101795920859, guid: 98a42b970f691114c9b61abe8e0f3b3b, type: 3}
+      weight: 20
+  snapToNavMesh: 1
+  navSampleRadius: 1
+  spawnVFX: {fileID: 8210342783702244756, guid: 406d0ddcd8d255d4381c2bfbe341eb10, type: 3}
 --- !u!1 &7134751179645888258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,7 +2017,7 @@ MonoBehaviour:
   doorSouthVisual: {fileID: 8697199005235252097}
   doorEastVisual: {fileID: 271412376497436802}
   doorWestVisual: {fileID: 0}
-  enemySpawner: {fileID: 0}
+  enemySpawner: {fileID: 3281536182731480589}
 --- !u!114 &3281536182731480589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1976,27 +2030,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d87b4dffec6fb244bc49367435e39ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomEnemySpawner
-  rules:
-  - enemyPrefab: {fileID: 1863452833870030615, guid: bc02eec580d733c44858ffc2267e5caf, type: 3}
-    min: 0
-    max: 2
-    startState: 1
-    chance: 0.5
-  - enemyPrefab: {fileID: 404000101795920859, guid: 98a42b970f691114c9b61abe8e0f3b3b, type: 3}
-    min: 0
-    max: 2
-    startState: 1
-    chance: 0.5
-  - enemyPrefab: {fileID: 9036194338941084516, guid: 0cf509bd16c636d45b15cd038ee71412, type: 3}
-    min: 0
-    max: 2
-    startState: 1
-    chance: 1
-  spawnPointsRoot: {fileID: 8537685671143535471}
-  patrolPathsRoot: {fileID: 605991061229968306}
-  snapToNavMesh: 1
-  navSampleRadius: 1
-  spawnVFX: {fileID: 8210342783702244756, guid: 406d0ddcd8d255d4381c2bfbe341eb10, type: 3}
+  spawnPoints:
+  - {fileID: 6375718878132649226}
+  - {fileID: 1266306117953325859}
+  spawnOnLoad: 0
 --- !u!1 &8173881227925302654
 GameObject:
   m_ObjectHideFlags: 0
