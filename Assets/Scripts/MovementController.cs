@@ -31,7 +31,7 @@ public class MovementController : MonoBehaviour
     [Header("Health")]
     public float maxHealth = 100f;
     public float currentHealth;
-    [SerializeField] private GUIPlayerInfo playerInfoGUI;
+    private GUIPlayerInfo playerInfoGUI;
 
     private CharacterController controller;
     private Camera cam;
@@ -99,6 +99,11 @@ public class MovementController : MonoBehaviour
             meleeHitbox.GetComponent<PlayerMeleeHitbox>()?.SetDamage(damage);
             meleeHitbox.SetActive(false);
         }
+    }
+
+    private void Start()
+    {
+        GUIManager.Instance.RegisterPlayer(this, playerInput);
     }
 
     void Update()
@@ -453,5 +458,10 @@ public class MovementController : MonoBehaviour
         {
             rb.linearVelocity = dir.normalized * projectileSpeed;
         }
+    }
+
+    public void SetPlayerInfoGUI(GUIPlayerInfo panel)
+    {
+        playerInfoGUI = panel;
     }
 }
