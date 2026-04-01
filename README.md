@@ -1,41 +1,40 @@
-# Top-Down Action RPG (Unity 6)
+# ETERNAL WATCHERS - Roguelite 3D
 
-Proyecto personal desarrollado en **Unity 6**.  
-Un **Action RPG Top-Down en 3D** centrado en:
+Proyecto de fin de Master desarrollado en **Unity 6**.  
+Un **Roguelite con perspectiva Top-Down** centrado en:
 
-- Combate claro y responsivo
-- Buen soporte para gamepad
-- Diseño de mazmorras modulares
+- Exploración de mazmorras
+- Combate sencillo y dinámico
+- Soporte para Gamepad con Pantalla compartida
+- Diseño de mazmorras procedural
 - Código simple, mantenible y escalable
 
-Inspirado en títulos como *Spiral Knights*, pero con un enfoque técnico moderno.
+Inspirado en títulos *Roguelite* y *Roguelike* como *Spiral Knights*.
 
 ---
 
 ## ✨ Features principales
 
 ### ⚔️ Combate
-- Ataque melee
-- Ataque a distancia con proyectiles
+- Ataque melee y/o a distancia
 - Bloquear ataques con escudos
 - Enemigos básicos a melee y a distancia
-- Variantes de Enemigos avanzados
-- Movilidad reducida
-- Varios enemigos con mecanicas diferenciadas
+- Enemigos avanzados con mecánicas diferenciadas
 - Jefes finales de mazmorra
 
 ### 🧭 Exploración
 - Mazmorras generadas aleatoriamente por grid
-  - Salas modulares (con tipos de salas diferenciadas)
+  - Salas modulares (con tamaños y tipos diferentes)
   - Uso de NavMesh en runetime
 
 ### 🎮 Control y cámara
 - Vista **Top-Down 3D**
 - Sistema de movimiento con **New Input System**
-- Soporte para **teclado y gamepad**
+- Soporte para **teclado y Gamepad**
+- Cooperativo para 2 jugadores (al conectar 2 Gamepads)
 - Cámara dinámica preparada para:
   - 1 jugador
-  - 2 jugadores en la misma pantalla
+  - 2 jugadores (pantalla compartida)
 
 ---
 
@@ -43,12 +42,17 @@ Inspirado en títulos como *Spiral Knights*, pero con un enfoque técnico modern
 
 - Uso de **New Input System** para soportar múltiples dispositivos
 - Código orientado a componentes simples y reutilizables
-- Evitado uso innecesario de sistemas complejos (URP, ECS, etc.)
+- Evitado uso innecesario de sistemas complejos (Dots, ECS, etc.)
  
 ---
 
 ## 🚀 Futuro (ideas)
 
-- Mejoras varias... Ej. Nuevos personajes
+Muchas mejoras varias e implementaciones:
+- Nuevos personajes y mas enemigos
+- Decoraciones en las salas, proceduralmente
+- Sistema de mejoras y progreso entre partidas
+- Mejorar aspecto visual e iluminación
+- Etc
 
 ---
