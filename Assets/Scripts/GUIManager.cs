@@ -9,6 +9,9 @@ public class GUIManager : MonoBehaviour
     public GameObject player1Panel;
     public GameObject player2Panel;
 
+    [Header("UI Popups")]
+    [SerializeField] private GameObject joinPlayerPopup;
+
     private void Awake()
     {
         Instance = this;
@@ -37,5 +40,12 @@ public class GUIManager : MonoBehaviour
 
         panel.SetActive(true);
         player.SetPlayerInfoGUI(panel.GetComponent<GUIPlayerInfo>());
+    }
+
+    public void ToggleJoinPlayerPopup(bool showPanel)
+    {
+        if (joinPlayerPopup == null) return;
+
+        joinPlayerPopup.SetActive(showPanel);
     }
 }

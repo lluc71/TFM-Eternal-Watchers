@@ -5,7 +5,7 @@ public class SummonStone : MonoBehaviour
 {
     [Header("Spawn")]
     [SerializeField] private Transform player2SpawnPoint;
-    
+
     public static SummonStone ActiveStone { get; private set; }
     
     public Transform SpawnPoint => player2SpawnPoint;
@@ -17,7 +17,8 @@ public class SummonStone : MonoBehaviour
 
         // Esta piedra pasa a ser la activa
         ActiveStone = this;
-
+        
+        GUIManager.Instance.ToggleJoinPlayerPopup(true);
         CoopJoinManager.Instance?.SetAllowJoin(true);
     }
 
@@ -30,6 +31,7 @@ public class SummonStone : MonoBehaviour
         if (ActiveStone == this)
             ActiveStone = null;
 
+        GUIManager.Instance.ToggleJoinPlayerPopup(false);
         CoopJoinManager.Instance?.SetAllowJoin(false);
     }
 }
