@@ -38,6 +38,7 @@ public class MovementController : MonoBehaviour
     private Animator animator;
     private PlayerInput playerInput;
     private InputAction blockAction;
+    private PauseManager pauseManager;
 
     Vector2 moveInput;
     private Vector2 stickInputPos;
@@ -99,6 +100,8 @@ public class MovementController : MonoBehaviour
             meleeHitbox.GetComponent<PlayerMeleeHitbox>()?.SetDamage(damage);
             meleeHitbox.SetActive(false);
         }
+
+        pauseManager = FindFirstObjectByType<PauseManager>();
     }
 
     private void Start()
@@ -108,6 +111,9 @@ public class MovementController : MonoBehaviour
 
     void Update()
     {
+        if (pauseManager != null && pauseManager.isPaused)
+            return;
+
         //Sustituye el OnBlock()
         if (blockAction != null && !isAttackPerforming)
         {

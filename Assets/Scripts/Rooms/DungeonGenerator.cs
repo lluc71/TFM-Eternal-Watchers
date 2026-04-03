@@ -11,7 +11,8 @@ public class DungeonGenerator : MonoBehaviour
     [Header("Grid")]
     [Min(1)] public int cellSize = 16; // en unidades Unity (X/Z)
     public bool randomSeed = true;
-    public int seed = 0;
+    public int defaultSeed = 0;
+    public int currentSeed { get; private set; }
 
     [Header("Generation")]
     public bool awakeDungeonGeneration;
@@ -45,8 +46,8 @@ public class DungeonGenerator : MonoBehaviour
     {
         Clear();
 
-        int finalSeed = randomSeed ? UnityEngine.Random.Range(int.MinValue, int.MaxValue) : seed;
-        rng = new System.Random(finalSeed);
+        currentSeed = randomSeed ? UnityEngine.Random.Range(int.MinValue, int.MaxValue) : defaultSeed;
+        rng = new System.Random(currentSeed);
 
         if (!dungeonRoot)
         {
@@ -84,7 +85,7 @@ public class DungeonGenerator : MonoBehaviour
         // Ramas
         GenerateBranches();
 
-        Debug.Log($"Dungeon generado. Salas: {placed.Count} (seed={finalSeed})");
+        Debug.Log($"Dungeon generado. Salas: {placed.Count} (seed={currentSeed})");
     }
 
     private void GenerateBranches()
