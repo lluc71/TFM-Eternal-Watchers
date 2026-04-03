@@ -847,7 +847,7 @@ MonoBehaviour:
   useMeleeAttack: 1
   damage: 10
   maxCombo: 3
-  comboResetTime: 0.8
+  comboResetTime: 0.7
   fatigueTime: 1
   meleeHitbox: {fileID: 8187283699585631160}
   attackWindup: 0.2

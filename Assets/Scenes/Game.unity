@@ -2763,9 +2763,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3076242865059473974, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
+      propertyPath: fatigueTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3076242865059473974, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
+      propertyPath: comboResetTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3693082640890623494, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
       propertyPath: m_Name
       value: Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175074544667520953, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
+      propertyPath: m_Size.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175074544667520953, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175074544667520953, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
+      propertyPath: m_Size.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219529912858329267, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
