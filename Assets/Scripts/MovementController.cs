@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,6 +70,10 @@ public class MovementController : MonoBehaviour
     private int comboStep = 0;
     private float lastAttackTime = -10f;
     private bool isFatigued = false;
+
+    [Header("Melee - VFX")]
+    [SerializeField] private List<GameObject> meleeVfxPrefabs = new List<GameObject>();
+    [SerializeField] private Transform meleeVfxSpawnPoint;
 
     [Header("Ranged - Projectile")]
     [SerializeField] private Transform projectileSpawnPoint;
@@ -293,6 +298,18 @@ public class MovementController : MonoBehaviour
         return animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
     }
 
+    private void SpawnMeleeVfx(int combo)
+    {
+        if (meleeVfxPrefabs == null || meleeVfxPrefabs.Count == 0) return;
+
+        int index = Mathf.Clamp(combo - 1, 0, meleeVfxPrefabs.Count - 1);
+        GameObject selectedVfx = meleeVfxPrefabs[index];
+        if (selectedVfx == null) return;
+
+        Transform spawnPoint = meleeVfxSpawnPoint != null ? meleeVfxSpawnPoint : transform;
+        Instantiate(selectedVfx, spawnPoint);
+    }
+
     private void ResetFatigue()
     {
         isFatigued = false;
@@ -411,7 +428,8 @@ public class MovementController : MonoBehaviour
         // Espera antes del impacto
         yield return new WaitForSeconds(windup);
 
-        // Activar hitbox
+        // Activar VFX y hitbox
+        SpawnMeleeVfx(combo);
         meleeHitbox?.SetActive(true);
 
         // Ventana activa

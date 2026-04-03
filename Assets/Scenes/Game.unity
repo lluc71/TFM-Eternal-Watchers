@@ -2763,10 +2763,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3076242865059473974, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
-      propertyPath: playerInfoGUI
-      value: 
-      objectReference: {fileID: 1336378179}
     - target: {fileID: 3693082640890623494, guid: 12b031eb3c6824f44b284ddb5750e4fc, type: 3}
       propertyPath: m_Name
       value: Knight
