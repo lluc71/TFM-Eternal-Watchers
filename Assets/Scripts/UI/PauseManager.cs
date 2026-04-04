@@ -54,6 +54,8 @@ public class PauseManager : MonoBehaviour
 
     public void TogglePause()
     {
+        if (GUIManager.Instance.isVictoryPopupActive()) return;
+
         if (isPaused)
             ResumeGame();
         else

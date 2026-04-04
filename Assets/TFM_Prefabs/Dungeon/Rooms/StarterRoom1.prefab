@@ -972,7 +972,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1214,6 +1214,7 @@ MonoBehaviour:
   doorSouthVisual: {fileID: 8868541902011807066}
   doorEastVisual: {fileID: 3322460526022518885}
   doorWestVisual: {fileID: 7381543132673455016}
+  enemySpawner: {fileID: 0}
 --- !u!1 &6173269722581019722
 GameObject:
   m_ObjectHideFlags: 0

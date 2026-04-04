@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEngine.GraphicsBuffer;
 
 public class EnemyRogue : EnemyBasic
 {
-    private const float ALPHA_OPACO = 1f;
+    private static readonly int CamoAmountId = Shader.PropertyToID("_CamoAmount");
 
     [Header("Rogue Target Priority")]
     [Range(0f, 1f)] public float lowHealthWeight = 0.7f; // 0 = solo distancia, 1 = solo baja vida
 
 
     [Header("Rogue Camouflage")]
-    [Range(0f, 1f)] public float chaseAlpha = 0.45f;
+    [Range(0f, 1f)] public float chaseCamo = 0.75f;
     public float fadeDuration = 0.2f;
 
     [Tooltip("Si lo dejas vacío, buscará todos los Renderers hijos.")]
@@ -20,7 +21,7 @@ public class EnemyRogue : EnemyBasic
 
     private MaterialPropertyBlock mpb;
     private Coroutine fadeRoutine;
-    private float currentAlpha = ALPHA_OPACO;
+    private float currentCamo = 0f;
 
     protected override void Start()
     {
@@ -31,10 +32,8 @@ public class EnemyRogue : EnemyBasic
         if (targetRenderers == null || targetRenderers.Length == 0)
             targetRenderers = GetComponentsInChildren<Renderer>();
 
-        Debug.Log($"Renderers encontrados: {targetRenderers.Length}");
-
-        // Arranca opaco
-        ApplyAlpha(ALPHA_OPACO);
+        ApplyCamo(0f);
+        SetCastShadows(true);
     }
 
     // -- Prioriza el Target por su Vida y no solo por la Distancia
@@ -73,69 +72,75 @@ public class EnemyRogue : EnemyBasic
     {
         base.OnStateChanged(previous, next);
 
-        // Entra en Chase => camuflaje
         if (next == EnemyState.Chase)
-            FadeTo(chaseAlpha);
+        {
+            FadeTo(chaseCamo);
+            SetCastShadows(false);
+        }
 
-        // Sale de Chase => visible
         if (previous == EnemyState.Chase && next != EnemyState.Chase)
-            FadeTo(ALPHA_OPACO);
+        {
+            FadeTo(0f);
+            SetCastShadows(true);
+        }
 
-        // Opcional: al atacar, volver visible (si prefieres)
-        // if (next == EnemyState.Attack) FadeTo(1f);
-
-        // Si muere, visible (o lo que prefieras)
         if (next == EnemyState.Dead)
-            FadeTo(ALPHA_OPACO);
+        {
+            FadeTo(0f);
+            SetCastShadows(true);
+        }
     }
 
-    void FadeTo(float targetAlpha)
+    void FadeTo(float target)
     {
-        if (Mathf.Abs(currentAlpha - targetAlpha) < 0.01f) return;
+        if (Mathf.Abs(currentCamo - target) < 0.01f) return;
 
         if (fadeRoutine != null) StopCoroutine(fadeRoutine);
-        fadeRoutine = StartCoroutine(FadeRoutine(targetAlpha, fadeDuration));
+        fadeRoutine = StartCoroutine(FadeRoutine(target, fadeDuration));
     }
 
-    IEnumerator FadeRoutine(float targetAlpha, float duration)
+
+    IEnumerator FadeRoutine(float target, float duration)
     {
-        float start = currentAlpha;
+        float start = currentCamo;
         float t = 0f;
 
         while (t < duration)
         {
             t += Time.deltaTime;
-            ApplyAlpha(Mathf.Lerp(start, targetAlpha, t / duration));
+            ApplyCamo(Mathf.Lerp(start, target, t / duration));
             yield return null;
         }
 
-        ApplyAlpha(targetAlpha);
+        ApplyCamo(target);
         fadeRoutine = null;
     }
 
-    void ApplyAlpha(float a)
+    void ApplyCamo(float value)
     {
-        currentAlpha = a;
+        currentCamo = value;
 
         for (int i = 0; i < targetRenderers.Length; i++)
         {
             var r = targetRenderers[i];
             if (!r) continue;
 
-            var mat = r.sharedMaterial;
-            if (!mat) continue;
-
             r.GetPropertyBlock(mpb);
-
-            //Si usara URP no seria _Color seria _BaseColor
-            if (mat.HasProperty("_Color"))
-            {
-                var c = mat.GetColor("_Color");
-                c.a = a;
-                mpb.SetColor("_Color", c);
-            }
-
+            mpb.SetFloat(CamoAmountId, value);
             r.SetPropertyBlock(mpb);
+        }
+    }
+
+    void SetCastShadows(bool enabled)
+    {
+        for (int i = 0; i < targetRenderers.Length; i++)
+        {
+            var r = targetRenderers[i];
+            if (!r) continue;
+
+            r.shadowCastingMode = enabled
+                ? ShadowCastingMode.On
+                : ShadowCastingMode.Off;
         }
     }
 

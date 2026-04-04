@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class GUIManager : MonoBehaviour
 
     [Header("UI Popups")]
     [SerializeField] private GameObject joinPlayerPopup;
+    [SerializeField] private GameObject victoryPopup;
 
     private void Awake()
     {
@@ -47,5 +50,28 @@ public class GUIManager : MonoBehaviour
         if (joinPlayerPopup == null) return;
 
         joinPlayerPopup.SetActive(showPanel);
+    }
+
+    public void ShowVictoryPopup()
+    {
+        if (victoryPopup == null) return;
+
+        Time.timeScale = 0f;
+        victoryPopup.SetActive(true);
+
+        SelectFirstButton(victoryPopup);
+    }
+
+    public bool isVictoryPopupActive()
+    {
+        return (victoryPopup != null) ? victoryPopup.activeSelf : false;
+    }
+
+    private void SelectFirstButton(GameObject popup)
+    {
+        var button = popup.GetComponentInChildren<Button>();
+        if (button == null) return;
+
+        EventSystem.current?.SetSelectedGameObject(button.gameObject);
     }
 }
