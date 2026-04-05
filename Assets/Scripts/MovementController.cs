@@ -403,6 +403,8 @@ public class MovementController : MonoBehaviour
 
         animator.SetBool("IsDead", true);
 
+        PlayerRegistry.Unregister(transform);
+
         if (isFailureCondition())
             StartCoroutine(ShowFailureDelayed());
     }
