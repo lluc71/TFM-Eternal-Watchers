@@ -33,6 +33,7 @@ public class MovementController : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
     private GUIPlayerInfo playerInfoGUI;
+    public bool isDead { get; private set; }
 
     private CharacterController controller;
     private Camera cam;
@@ -116,6 +117,8 @@ public class MovementController : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+
         if (pauseManager != null && pauseManager.isPaused)
             return;
 
@@ -162,6 +165,7 @@ public class MovementController : MonoBehaviour
 
     public void OnAttack(InputValue value)
     {
+        if (isDead) return;
         if (!value.isPressed) return;
         if (isBlocking) return;
         if (isAttackPerforming) return;
@@ -319,6 +323,8 @@ public class MovementController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+
         lastShieldHitTime = Time.time;
 
         ResetRegenShieldCoroutine();
@@ -387,14 +393,18 @@ public class MovementController : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Jugador muerto");
+        if (isDead) return;
 
-        //animator.SetTrigger("Die");
-        //enabled = false; // Desactiva el script
-        // Aquí puedes:
-        // - desactivar controles
-        // - recargar escena
-        // - mostrar Game Over
+        isDead = true;
+        currentHealth = 0f;
+
+        if (meleeHitbox != null) 
+            meleeHitbox.SetActive(false);
+
+        animator.SetBool("IsDead", true);
+
+        if (isFailureCondition())
+            StartCoroutine(ShowFailureDelayed());
     }
 
     private void UpdateShieldVisual()
@@ -488,4 +498,25 @@ public class MovementController : MonoBehaviour
     {
         playerInfoGUI = panel;
     }
+
+    private bool isFailureCondition()
+    {
+        MovementController[] players = FindObjectsByType<MovementController>(FindObjectsSortMode.None);
+
+        foreach (var player in players)
+        {
+            if (!player.isDead)
+                return false;
+        }
+
+        return true;
+    }
+
+    private IEnumerator ShowFailureDelayed()
+    {
+        yield return new WaitForSeconds(2f);
+
+        GUIManager.Instance.ShowFailurePopup();
+    }
+
 }

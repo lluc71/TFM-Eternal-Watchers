@@ -847,7 +847,7 @@ MonoBehaviour:
   useMeleeAttack: 1
   damage: 10
   maxCombo: 3
-  comboResetTime: 0.7
+  comboResetTime: 1
   fatigueTime: 1
   meleeHitbox: {fileID: 8187283699585631160}
   attackWindup: 0.2
@@ -2335,7 +2335,7 @@ Transform:
   m_GameObject: {fileID: 8187283699585631160}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 1.25}
+  m_LocalPosition: {x: 0, y: 1, z: 1.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2373,7 +2373,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.25, y: 1.4, z: 2.25}
+  m_Size: {x: 2.5, y: 1, z: 2.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &126306301028329113
 Rigidbody:

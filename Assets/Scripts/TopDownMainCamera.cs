@@ -34,8 +34,8 @@ public class TopDownMainCamera : MonoBehaviour
     [Tooltip("Limita el desplazamiento por frame para evitar tirones (0 = sin límite).")]
     [SerializeField] private float maxMoveSpeed = 0f;
 
-    private Vector3 _currentFocus;
-    private Vector3 _focusVelocity;
+    private Vector3 currentFocus;
+    private Vector3 focusVelocity;
 
     private void Reset()
     {
@@ -45,7 +45,7 @@ public class TopDownMainCamera : MonoBehaviour
 
     private void Start()
     {
-        _currentFocus = GetDesiredFocusPoint();
+        currentFocus = GetDesiredFocusPoint();
     }
 
     private void LateUpdate()
@@ -55,25 +55,25 @@ public class TopDownMainCamera : MonoBehaviour
         Vector3 desiredFocus = GetDesiredFocusPoint();
 
         // Deadzone: si el foco deseado está dentro del radio, no muevas el foco actual
-        Vector3 delta = desiredFocus - _currentFocus;
+        Vector3 delta = desiredFocus - currentFocus;
         if (delta.magnitude > followDeadzone)
         {
             Vector3 outside = delta.normalized * (delta.magnitude - followDeadzone);
-            Vector3 goal = _currentFocus + outside;
+            Vector3 goal = currentFocus + outside;
 
-            _currentFocus = Vector3.SmoothDamp(_currentFocus, goal, ref _focusVelocity, smoothTime);
+            currentFocus = Vector3.SmoothDamp(currentFocus, goal, ref focusVelocity, smoothTime);
 
             if (maxMoveSpeed > 0f)
             {
                 // Limita velocidad real del foco
-                _focusVelocity = Vector3.ClampMagnitude(_focusVelocity, maxMoveSpeed);
+                focusVelocity = Vector3.ClampMagnitude(focusVelocity, maxMoveSpeed);
             }
         }
 
         float zoomMul = ComputeZoomMultiplier();
 
         // Aplica offset y posición final
-        Vector3 desiredCamPos = _currentFocus + baseOffset * zoomMul;
+        Vector3 desiredCamPos = currentFocus + baseOffset * zoomMul;
         transform.position = desiredCamPos;
 
         // Mantén la rotación fija (si quieres), o comenta si tu cámara ya está orientada como te guste
@@ -82,14 +82,19 @@ public class TopDownMainCamera : MonoBehaviour
 
     private Vector3 GetDesiredFocusPoint()
     {
-        if (targetA && targetB)
-        {
-            // Punto medio en XZ, y puedes fijar Y a 0 si tu mundo es plano
-            Vector3 mid = (targetA.position + targetB.position) * 0.5f;
-            return mid;
-        }
+        bool aAlive = IsTargetAlive(targetA);
+        bool bAlive = IsTargetAlive(targetB);
 
-        return targetA.position;
+        if (aAlive && bAlive)
+            return (targetA.position + targetB.position) * 0.5f;
+
+        if (aAlive)
+            return targetA.position;
+
+        if (bAlive)
+            return targetB.position;
+
+        return currentFocus;
     }
 
     private float ComputeZoomMultiplier()
@@ -103,6 +108,15 @@ public class TopDownMainCamera : MonoBehaviour
 
         float mul = Mathf.Lerp(1f, maxZoomMultiplier, t);
         return Mathf.Clamp(mul, 1f, hardMaxZoomMultiplier);
+    }
+    private bool IsTargetAlive(Transform target)
+    {
+        if (target == null) return false;
+
+        MovementController player = target.GetComponent<MovementController>();
+        if (player == null) return false;
+
+        return !player.isDead;
     }
 
     // API simple para tu spawner / manager

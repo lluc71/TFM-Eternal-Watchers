@@ -14,6 +14,7 @@ public class GUIManager : MonoBehaviour
     [Header("UI Popups")]
     [SerializeField] private GameObject joinPlayerPopup;
     [SerializeField] private GameObject victoryPopup;
+    [SerializeField] private GameObject failurePopup;
 
     private void Awake()
     {
@@ -66,6 +67,10 @@ public class GUIManager : MonoBehaviour
     {
         return (victoryPopup != null) ? victoryPopup.activeSelf : false;
     }
+    public bool isFailurePopupActive()
+    {
+        return (failurePopup != null) ? failurePopup.activeSelf : false;
+    }
 
     private void SelectFirstButton(GameObject popup)
     {
@@ -73,5 +78,15 @@ public class GUIManager : MonoBehaviour
         if (button == null) return;
 
         EventSystem.current?.SetSelectedGameObject(button.gameObject);
+    }
+
+    public void ShowFailurePopup()
+    {
+        if (failurePopup == null) return;
+
+        Time.timeScale = 0f;
+        failurePopup.SetActive(true);
+
+        SelectFirstButton(failurePopup);
     }
 }
