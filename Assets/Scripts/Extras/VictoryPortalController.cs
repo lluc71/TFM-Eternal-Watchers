@@ -7,18 +7,7 @@ public class VictoryPortalController : MonoBehaviour
 {
     private readonly HashSet<PlayerInput> playersInside = new();
 
-    private PlayerInputManager playerInputManager;
     private bool victoryTriggered = false;
-
-    private void Awake()
-    {
-        playerInputManager = FindFirstObjectByType<PlayerInputManager>();
-
-        if (playerInputManager == null)
-        {
-            Debug.LogWarning("VictoryPortalController: No se encontró un PlayerInputManager en la escena.");
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -50,17 +39,24 @@ public class VictoryPortalController : MonoBehaviour
         {
             TriggerVictory();
         }
+
     }
 
     private int GetRequiredPlayersCount()
     {
-        if (playerInputManager == null) return 0;
+        int requiredPlayers = 0;
 
-        int count = playerInputManager.playerCount;
-        // TO DO: count = jugadores unidos y vivos
+        MovementController[] players = FindObjectsByType<MovementController>(FindObjectsSortMode.None);
 
-        return count;
+        foreach (var player in players)
+        {
+            if (!player.isDead)
+                requiredPlayers++;
+        }
+
+        return requiredPlayers;
     }
+
     private void TriggerVictory()
     {
         if (victoryTriggered) return;
