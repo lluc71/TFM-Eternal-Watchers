@@ -4,19 +4,19 @@ using UnityEngine;
 public abstract class BossPhaseBase : MonoBehaviour
 {
     [Header("Phase Settings")]
-    [SerializeField] protected float minHealthPercent = 0f;
-    [SerializeField] protected float maxHealthPercent = 1f;
+    [SerializeField] protected float minHealthPhase = 0f;
+    [SerializeField] protected float maxHealthPhase = 1f;
     [SerializeField] protected float moveSpeed = 3.5f;
     [SerializeField] protected float specialCooldown = 5f;
 
-    public float MinHealthPercent => minHealthPercent;
-    public float MaxHealthPercent => maxHealthPercent;
+    public float MinHealth => minHealthPhase;
+    public float MaxHealth => maxHealthPhase;
     public float MoveSpeed => moveSpeed;
     public float SpecialCooldown => specialCooldown;
 
-    public bool IsInPhase(float healthPercent)
+    public bool IsInPhase(float health)
     {
-        return ((healthPercent <= maxHealthPercent) && (healthPercent > minHealthPercent));
+        return ((health <= maxHealthPhase) && (health > minHealthPhase));
     }
 
     public virtual void OnEnterPhase(EnemyBossController boss) { }

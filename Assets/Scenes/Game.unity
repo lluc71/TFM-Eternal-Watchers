@@ -2653,6 +2653,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 408112, guid: c6cb56b5c70f4f14ebf96689fda29f2c, type: 3}
   m_PrefabInstance: {fileID: 806358982}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &675161911
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 173972, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_Name
+      value: NovaFirePink
+      objectReference: {fileID: 0}
+    - target: {fileID: 173972, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.49799
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.7517
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498930, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
 --- !u!4 &680268250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 408112, guid: c6cb56b5c70f4f14ebf96689fda29f2c, type: 3}
@@ -5978,6 +6039,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 408112, guid: c6cb56b5c70f4f14ebf96689fda29f2c, type: 3}
   m_PrefabInstance: {fileID: 419514045}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1159693883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2382774945819021752, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+  m_PrefabInstance: {fileID: 648838627971141233}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1159693895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159693883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8f89bc830bf14469cbc6b6b943d34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlamAOEBossPhase
+  minHealthPhase: 50
+  maxHealthPhase: 100
+  moveSpeed: 3.5
+  specialCooldown: 10
+  castDelay: 0.8
+  minRange: 3
+  maxRange: 8
+  aoeRadius: 3.5
+  aoeDamage: 25
+  aoeVfxPrefab: {fileID: 173972, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!4 &1179910998 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 438576, guid: 42988b617e6b4924e88885352823ba7f, type: 3}
@@ -10206,9 +10297,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 740711273077669810, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2382774945819021752, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
       propertyPath: m_Name
       value: SkeletonBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002595953281687076, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002595953281687076, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: meleeCooldown
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002595953281687076, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: phases.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3002595953281687076, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: 'phases.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1159693895}
+    - target: {fileID: 3301270039504128279, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: m_Name
+      value: WeaponSpawnPoint
       objectReference: {fileID: 0}
     - target: {fileID: 5847145314516959740, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10250,10 +10365,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7527807108257884681, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: maxHealthPhase
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7527807108257884681, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: minHealthPhase
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7527807108257884681, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: maxHealthPercent
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7527807108257884681, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      propertyPath: minHealthPercent
+      value: 51
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2382774945819021752, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1159693895}
   m_SourcePrefab: {fileID: 100100000, guid: 9cb5d32a7faad7e4c9c11f7611d33102, type: 3}
 --- !u!1 &3440689941315120552
 GameObject:
@@ -10914,3 +11048,4 @@ SceneRoots:
   - {fileID: 219399318}
   - {fileID: 9005089432944804328}
   - {fileID: 648838627971141233}
+  - {fileID: 675161911}

@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class EnemyBossController : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private Transform effectsSpawnPoint;
     [SerializeField] private Transform projectileSpawnPoint;
 
     [Header("Stats")]
@@ -39,7 +40,9 @@ public class EnemyBossController : MonoBehaviour
     private bool isDead = false;
     private bool isBusy = false;
 
-    public float GetHealthPercent => (maxHealth <= 0f) ? 0f : (currentHealth / maxHealth);
+    //public float GetHealthPercent => (maxHealth <= 0f) ? 0f : (currentHealth / maxHealth);
+    public Transform EffectsSpawnPoint => effectsSpawnPoint;
+    public Animator Animator => animator;
 
     private void Start()
     {
@@ -129,11 +132,11 @@ public class EnemyBossController : MonoBehaviour
     {
         if (phases == null || phases.Length == 0) return null;
 
-        float healthPercent = GetHealthPercent;
+        //float healthPercent = GetHealthPercent;
 
         foreach (BossPhaseBase phase in phases)
         {
-            if (phase != null && phase.IsInPhase(healthPercent))
+            if (phase != null && phase.IsInPhase(currentHealth))
                 return phase;
         }
 
@@ -151,7 +154,7 @@ public class EnemyBossController : MonoBehaviour
     /**
      * Elige/Busca el Player (!death) mas cercano 
      */
-    private Transform GetClosestAlivePlayer()
+    public Transform GetClosestAlivePlayer()
     {
         var players = PlayerRegistry.Players;
         if (players == null || players.Count == 0) return null;
@@ -214,7 +217,7 @@ public class EnemyBossController : MonoBehaviour
         RotateTowards(currentTarget.position);
     }
 
-    private void RotateTowards(Vector3 targetPosition)
+    public void RotateTowards(Vector3 targetPosition)
     {
         Vector3 direction = targetPosition - transform.position;
         direction.y = 0f;
@@ -282,8 +285,6 @@ public class EnemyBossController : MonoBehaviour
 
         if (currentTarget != null)
             RotateTowards(currentTarget.position);
-
-        animator.SetTrigger("Special");
 
         yield return currentPhase.ExecuteSpecial(this, currentTarget);
 
