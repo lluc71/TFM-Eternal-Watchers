@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 public class SlamAOEBossPhase : BossPhaseBase
 {
     [Header("Attack Params")]
-    [SerializeField] private float castDelay = 0.8f;
     [SerializeField] private float minRange = 3f;
     [SerializeField] private float maxRange = 8f;
 
@@ -20,14 +19,14 @@ public class SlamAOEBossPhase : BossPhaseBase
         return (distanceToTarget >= minRange) && (distanceToTarget <= maxRange);
     }
 
-    public override IEnumerator ExecuteSpecial(EnemyBossController boss, Transform target)
+    public override string GetAnimatorTriggerName()
     {
-        boss.Animator.SetTrigger("Slam");
-        yield return new WaitForSeconds(castDelay);
+        return "Slam";
+    }
 
-        boss.RotateTowards(target.position);
-
-        Vector3 spawnPosition = boss.transform.position + boss.transform.forward * 4f;
+    public override void ExecuteSpecialImpact(EnemyBossController boss, Transform target)
+    {
+        Vector3 spawnPosition = boss.WeaponSpawnPoint.position;
         spawnPosition.y = 0.4f;
         Instantiate(aoeVfxPrefab, spawnPosition, Quaternion.identity);
 
@@ -37,9 +36,9 @@ public class SlamAOEBossPhase : BossPhaseBase
             playerLayerMask
         );
 
-        for (int i = 0; i < hits.Length; i++)
+        foreach (Collider hit in hits)
         {
-            MovementController player = hits[i].GetComponent<MovementController>();
+            MovementController player = hit.GetComponent<MovementController>();
             if (player == null) continue;
 
             player.TakeDamage(aoeDamage);

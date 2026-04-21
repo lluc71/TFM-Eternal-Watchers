@@ -1,15 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
-public class SimpleBossPhase : BossPhaseBase
+public class WeaponStabBossPhase : BossPhaseBase
 {
 
-    [Header("VFX Hitbox")]
-    [SerializeField] private GameObject vfxPrefab;
+    [Header("Melee Hitbox")]
+    [SerializeField] private BossMeleeHitbox meleeHitbox;
+    [SerializeField] private float activeTime = 0.5f;
 
     [Header("Attack Params")]
     [SerializeField] private float minRange = 3.5f;
     [SerializeField] private float maxRange = 9f;
+    [SerializeField] private float damage = 20f;
 
     public override bool CanUseSpecial(EnemyBossController boss, Transform target, float distanceToTarget)
     {
@@ -23,10 +25,9 @@ public class SimpleBossPhase : BossPhaseBase
 
     public override void ExecuteSpecialImpact(EnemyBossController boss, Transform target)
     {
-        boss.RotateTowards(target.position);
+        boss.ForceRotateTowards(target.position);
 
-        Vector3 spawnPosition = boss.ProjectileSpawnPoint.position;
-
-        Instantiate(vfxPrefab, spawnPosition, boss.transform.rotation);
+        meleeHitbox?.Initialize(damage);
+        meleeHitbox?.ActivateHitbox(activeTime);
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class EnemyBossController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform effectsSpawnPoint;
+    [SerializeField] private Transform weaponSpawnPoint;
     [SerializeField] private Transform projectileSpawnPoint;
 
     [Header("Stats")]
@@ -18,6 +18,10 @@ public class EnemyBossController : MonoBehaviour
     [SerializeField] private float meleeRange = 2.5f;
     [SerializeField] private float meleeDamage = 20f;
     [SerializeField] private float meleeCooldown = 1.5f;
+
+    [Header("Melee Hitbox")]
+    [SerializeField] private BossMeleeHitbox meleeHitbox;
+    [SerializeField] private float meleeHitboxActiveTime = 0.25f;
 
     [Header("Targeting")]
     [SerializeField] private float targetRefreshInterval = 0.5f;
@@ -40,8 +44,13 @@ public class EnemyBossController : MonoBehaviour
     private bool isDead = false;
     private bool isBusy = false;
 
+    //TODO: Mirar si basta usar el isBusy o no
+    private bool isPerformingMelee = false;
+    private bool isPerformingSpecial = false;
+
     //public float GetHealthPercent => (maxHealth <= 0f) ? 0f : (currentHealth / maxHealth);
-    public Transform EffectsSpawnPoint => effectsSpawnPoint;
+    public Transform WeaponSpawnPoint => weaponSpawnPoint;
+    public Transform ProjectileSpawnPoint => projectileSpawnPoint;
     public Animator Animator => animator;
 
     private void Start()
@@ -52,6 +61,8 @@ public class EnemyBossController : MonoBehaviour
         currentHealth = maxHealth;
         ResetAllPhases();
         UpdatePhase();
+
+        meleeHitbox?.Initialize(meleeDamage);
     }
 
     private void Update()
@@ -195,13 +206,13 @@ public class EnemyBossController : MonoBehaviour
 
         if (CanUseSpecial(distance))
         {
-            StartCoroutine(PerformSpecialAttack());
+            StartSpecialAttack();
             return;
         }
 
         if (CanUseMelee(distance))
         {
-            StartCoroutine(PerformMeleeAttack());
+            StartMeleeAttack();
             return;
         }
 
@@ -228,6 +239,20 @@ public class EnemyBossController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
+    /**
+     * Rotacion extrema. Solo usar antes de un Special.
+     */
+    public void ForceRotateTowards(Vector3 targetPosition)
+    {
+        Vector3 direction = targetPosition - transform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude <= 0.0001f) return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
+        transform.rotation = targetRotation;
+    }
+
     private void StopMovement()
     {
         agent.ResetPath();
@@ -250,9 +275,13 @@ public class EnemyBossController : MonoBehaviour
         return currentPhase.CanUseSpecial(this, currentTarget, distance);
     }
 
-    private IEnumerator PerformMeleeAttack()
+    /**
+     * Lanzamos la animacion y en ella usamos Events para activar el hitbox
+     */
+    private void StartMeleeAttack()
     {
         isBusy = true;
+        isPerformingMelee = true;
         meleeTimer = meleeCooldown;
 
         StopMovement();
@@ -261,36 +290,23 @@ public class EnemyBossController : MonoBehaviour
             RotateTowards(currentTarget.position);
 
         animator.SetTrigger("Attack");
-
-        //TODO: Lanzar efecto visual VFX
-        //TODO: Que sea el efecto visual quien haga daño con un colider
-
-        //O utilizar un MeleeHitBox
-
-        yield return new WaitForSeconds(0.25f);
-
-        //DealMeleeDamage();
-
-        yield return new WaitForSeconds(0.25f);
-
-        isBusy = false;
     }
 
-    private IEnumerator PerformSpecialAttack()
+    /**
+     * Lanzamos la animacion del Special Attack de la fase actual
+     */
+    private void StartSpecialAttack()
     {
         isBusy = true;
+        isPerformingSpecial = true;
         specialTimer = currentPhase.SpecialCooldown;
 
         StopMovement();
 
         if (currentTarget != null)
-            RotateTowards(currentTarget.position);
+            ForceRotateTowards(currentTarget.position);
 
-        yield return currentPhase.ExecuteSpecial(this, currentTarget);
-
-        yield return new WaitForSeconds(0.25f);
-
-        isBusy = false;
+        animator.SetTrigger(currentPhase.GetAnimatorTriggerName());
     }
 
     public void TakeDamage(float damage)
@@ -313,6 +329,64 @@ public class EnemyBossController : MonoBehaviour
 
         StopMovement();
 
-        animator.SetBool("IsDead", true);
+        //Desactiva los colliders del boss
+        meleeHitbox?.Disable();
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
+        animator.SetTrigger("Die");
+    }
+
+
+    //----------- ANIMATION EVENTS --------------
+    //- Todos cuentan con un Start i con un End -
+
+    /**
+     * Evento Inicio para el ataque normal.
+     * Activamos el Hitbox el tiempo definido.
+     */
+    public void Event_MeleeAttackStart()
+    {
+        if (!isPerformingMelee || isDead) return;
+
+        meleeHitbox?.ActivateHitbox(meleeHitboxActiveTime);
+    }
+
+    /**
+     * Evento Fin para el ataque normal.
+     * Limpiamos flags para salir del estado actual.
+     */
+    public void Event_MeleeAttackFinished()
+    {
+        if (!isPerformingMelee) return;
+
+        isPerformingMelee = false;
+        isBusy = false;
+    }
+
+    /**
+     * Evento Inicio para el ataque especial.
+     * Llamamos al ExecuteSpecialImpact de la fase actual.
+     */
+    public void Event_SpecialStart()
+    {
+        if (!isPerformingSpecial || isDead) return;
+        if (currentPhase == null) return;
+
+        currentPhase.ExecuteSpecialImpact(this, currentTarget);
+    }
+
+    /**
+     * Evento Fin para el ataque especial.
+     * Limpiamos flags para salir del estado actual.
+     */
+    public void Event_SpecialFinished()
+    {
+        if (!isPerformingSpecial) return;
+
+        isPerformingSpecial = false;
+        isBusy = false;
     }
 }
