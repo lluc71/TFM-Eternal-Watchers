@@ -398,7 +398,7 @@ MonoBehaviour:
   specialCooldown: 12
   minRange: 3
   maxRange: 15
-  projectilePrefab: {fileID: 4270582213916160872, guid: 5cd5e0dbe652cd144a392262b45da24a, type: 3}
+  projectilePrefab: {fileID: 3451001683157180159, guid: 980bf4ea083f818498503b52202e3fd9, type: 3}
   projectileCount: 3
   maxSpreadAngle: 50
   projectileSpeed: 6
