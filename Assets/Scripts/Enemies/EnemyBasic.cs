@@ -315,6 +315,12 @@ public class EnemyBasic : MonoBehaviour
         agent.isStopped = true;
         animator?.SetTrigger("Die");
 
+        //Desactiva los colliders del enemigo
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
         //TODO: Hacer que cada X segundos se hunda en el suelo o FadeOut()
 
         Destroy(gameObject, 3f);

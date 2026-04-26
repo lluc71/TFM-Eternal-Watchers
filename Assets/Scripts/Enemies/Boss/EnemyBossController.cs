@@ -32,6 +32,7 @@ public class EnemyBossController : MonoBehaviour
 
     private NavMeshAgent agent;
     private Animator animator;
+    private GUIBossInfo bossInfoGUI;
 
     private float currentHealth;
     private Transform currentTarget;
@@ -63,6 +64,8 @@ public class EnemyBossController : MonoBehaviour
         UpdatePhase();
 
         meleeHitbox?.Initialize(meleeDamage);
+
+        GUIManager.Instance.RegisterBoss(this);
     }
 
     private void Update()
@@ -317,6 +320,9 @@ public class EnemyBossController : MonoBehaviour
         //animator.SetTrigger("Hit");
 
         currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
+        bossInfoGUI?.UpdateHealth(currentHealth, maxHealth);
 
         if (currentHealth <= 0f)
             Die();
@@ -326,6 +332,7 @@ public class EnemyBossController : MonoBehaviour
     {
         isDead = true;
         currentHealth = 0f;
+        GUIManager.Instance.HideBossPanel();
 
         StopMovement();
 
@@ -337,6 +344,14 @@ public class EnemyBossController : MonoBehaviour
         }
 
         animator.SetTrigger("Die");
+    }
+
+    public void SetBossInfoGUI(GUIBossInfo panel)
+    {
+        bossInfoGUI = panel;
+
+        int phaseCount = (phases != null) ? phases.Length : 0;
+        bossInfoGUI?.Setup(maxHealth, phaseCount);
     }
 
 

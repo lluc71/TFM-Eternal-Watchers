@@ -10,6 +10,7 @@ public class GUIManager : MonoBehaviour
     [Header("UI Panels")]
     public GameObject player1Panel;
     public GameObject player2Panel;
+    public GameObject bossPanel;
 
     [Header("UI Popups")]
     [SerializeField] private GameObject joinPlayerPopup;
@@ -44,6 +45,19 @@ public class GUIManager : MonoBehaviour
 
         panel.SetActive(true);
         player.SetPlayerInfoGUI(panel.GetComponent<GUIPlayerInfo>());
+    }
+
+    public void RegisterBoss(EnemyBossController boss)
+    {
+        if (bossPanel == null || boss == null) return;
+
+        bossPanel.SetActive(true);
+        boss.SetBossInfoGUI(bossPanel.GetComponent<GUIBossInfo>());
+    }
+
+    public void HideBossPanel()
+    {
+        bossPanel?.SetActive(false);
     }
 
     public void ToggleJoinPlayerPopup(bool showPanel)
