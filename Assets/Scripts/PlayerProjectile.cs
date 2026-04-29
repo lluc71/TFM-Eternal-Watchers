@@ -40,13 +40,28 @@ public class PlayerProjectile : MonoBehaviour
         //Detectamos colisiones con enemigos
         if (!other.CompareTag("Enemy")) return;
 
-        EnemyBasic enemy = other.GetComponentInParent<EnemyBasic>();
-        if (enemy == null) return;
+        CheckBasicEnemy(other);
+        CheckBossEnemy(other);
 
-        enemy.TakeDamage(damage);
         SpawnImpactVFX(other);
 
         Destroy(gameObject);
+    }
+
+    private void CheckBasicEnemy(Collider other)
+    {
+        EnemyBasic enemyBasic = other.GetComponentInParent<EnemyBasic>();
+        if (enemyBasic == null) return;
+
+        enemyBasic.TakeDamage(damage);
+    }
+
+    private void CheckBossEnemy(Collider other)
+    {
+        EnemyBossController bossEnemy = other.GetComponentInParent<EnemyBossController>();
+        if (bossEnemy == null) return;
+
+        bossEnemy.TakeDamage(damage);
     }
 
     private void SpawnImpactVFX(Collider col)
