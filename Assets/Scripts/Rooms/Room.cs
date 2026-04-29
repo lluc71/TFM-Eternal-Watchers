@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    [Header("Meta")]
+    [Header("Room type")]
     public RoomType type;
 
-    [Header("Allowed door sides (design-time)")]
+    [Header("Direcciones permitidas (puertas)")]
     public bool allowNorth = true;
     public bool allowSouth = true;
     public bool allowEast = true;
@@ -17,7 +17,7 @@ public class Room : MonoBehaviour
     public bool east;
     public bool west;
 
-    [Header("Optional visuals (assign in prefab)")]
+    [Header("Prefabs de las puertas")]
     public GameObject doorNorthVisual;
     public GameObject doorSouthVisual;
     public GameObject doorEastVisual;
@@ -62,37 +62,25 @@ public class Room : MonoBehaviour
         RefreshDoorVisuals();
     }
 
+    /**
+     * Activa o desactiva los prefabs de las puertas de la habitacion
+     */
     public void RefreshDoorVisuals()
     {
-        // Interpretación simple: si está conectado, se muestra.
         if (doorNorthVisual) doorNorthVisual.SetActive(!north);
         if (doorSouthVisual) doorSouthVisual.SetActive(!south);
         if (doorEastVisual) doorEastVisual.SetActive(!east);
         if (doorWestVisual) doorWestVisual.SetActive(!west);
     }
 
+    /**
+     * Si el flag isSpawnOnLoad esta activado, intenta Spawnear a los enemigos de la sala
+     */
     public void TrySpawnEnemiesOnLoad()
     {
         if (!enemySpawner) return;
+        if (!enemySpawner.isSpawnOnLoad()) return;
 
-        if (enemySpawner.isSpawnOnLoad())
-        {
-            enemySpawner.TrySpawnEnemies();
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        // Gizmo pequeñito para ver allowed (verde) / no allowed (rojo)
-        DrawDirGizmo(Vector3.forward, allowNorth);
-        DrawDirGizmo(Vector3.back, allowSouth);
-        DrawDirGizmo(Vector3.right, allowEast);
-        DrawDirGizmo(Vector3.left, allowWest);
-    }
-
-    private void DrawDirGizmo(Vector3 dir, bool allowed)
-    {
-        Gizmos.color = allowed ? Color.green : Color.red;
-        Gizmos.DrawRay(transform.position, dir * 1.5f);
+        enemySpawner.TrySpawnEnemies();
     }
 }

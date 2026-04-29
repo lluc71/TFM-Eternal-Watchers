@@ -9,13 +9,13 @@ public class DungeonGenerator : MonoBehaviour
     public DungeonRulesSO rules;
 
     [Header("Grid")]
-    [Min(1)] public int cellSize = 16; // en unidades Unity (X/Z)
+    [Min(1)] public int cellSize = 25; // en unidades Unity (X/Z)
     public bool randomSeed = true;
     public int defaultSeed = 0;
     public int currentSeed { get; private set; }
 
     [Header("Generation")]
-    public bool awakeDungeonGeneration;
+    public bool awakeDungeonGeneration = true;
     [Min(1)] public int maxPickAttemptsPerStep = 40; // reintentos para encontrar vecino libre
 
     [Header("Hierarchy")]
@@ -32,21 +32,21 @@ public class DungeonGenerator : MonoBehaviour
 
     public void Start()
     {
-        if(awakeDungeonGeneration)
-        {
-            Generate();
-            //SpawnMiscelaniaInRooms();
-            navMeshSurface?.BuildNavMesh();
+        if (!awakeDungeonGeneration) return;
 
-            SpawnEnemiesInRooms();
-        }
+        GenerateDungeon();
+        //TODO: SpawnMiscelaniaInRooms();
+
+        navMeshSurface?.BuildNavMesh();
+        SpawnEnemiesInRooms();
     }
 
-    public void Generate()
+    public void GenerateDungeon()
     {
-        Clear();
+        ClearDungeon();
 
-        currentSeed = randomSeed ? UnityEngine.Random.Range(int.MinValue, int.MaxValue) : defaultSeed;
+        //TODO: Usar PlayerPrefs para leer la defaultSeed y el flag randomSeed
+        currentSeed = randomSeed ? Random.Range(int.MinValue, int.MaxValue) : defaultSeed;
         rng = new System.Random(currentSeed);
 
         if (!dungeonRoot)
@@ -56,20 +56,20 @@ public class DungeonGenerator : MonoBehaviour
             dungeonRoot = rootGo.transform;
         }
 
-        // Start
+        // Creamos la primera Room de tipo: Start
         Vector2Int cell = Vector2Int.zero;
         Room current = SpawnAt(cell, RoomType.Start);
         placed[cell] = current;
 
         mainPathCells.Add(cell);
 
-        // Plan del camino principal
+        // Decidimos el orden y los tipos de Rooms del path principal
         var plan = BuildRoomPlan();
 
+        // Recorremos el plan, elegimos los prefabs y los instanciamos
         for (int step = 0; step < plan.Count; step++)
         {
             RoomType nextType = plan[step];
-
             if (!TryPlaceNext(current, cell, nextType, out Room nextRoom, out Vector2Int nextCell))
             {
                 Debug.LogWarning($"No se pudo colocar sala {nextType} en el paso {step}. Abortando main path.");
@@ -82,18 +82,20 @@ public class DungeonGenerator : MonoBehaviour
             mainPathCells.Add(cell);
         }
 
-        // Ramas
         GenerateBranches();
 
         Debug.Log($"Dungeon generado. Salas: {placed.Count} (seed={currentSeed})");
     }
 
+    /**
+     * Genera las habitaciones que no son parte del path principal. Hasta llegar al numero de habitaciones indicado en Rules.
+     */
     private void GenerateBranches()
     {
         int branchesToTry = Mathf.Max(0, rules.branchCount);
         if (branchesToTry == 0) return;
 
-        // Candidatos: salas del camino principal excepto Start y End (y opcionalmente Boss)
+        // Salas del path principal donde empezar la rama. Excluimos Start y End
         var candidates = new List<Vector2Int>();
         for (int i = 1; i < mainPathCells.Count - 1; i++)
             candidates.Add(mainPathCells[i]);
@@ -108,33 +110,36 @@ public class DungeonGenerator : MonoBehaviour
 
             if (!placed.TryGetValue(baseCell, out var baseRoom) || !baseRoom) continue;
 
-            // No ramificar desde Boss si no quieres (opcional)
+            // Excluimos tambien la sala del Boss
             if (baseRoom.type == RoomType.Boss) continue;
 
-            // ¿Tiene salidas libres?
+            // Comprobamos sus puertas libres
             var freeDirs = GetValidExitDirections(baseRoom, baseCell);
             if (freeDirs.Count == 0) continue;
 
             // Intentar crear una rama
-            int len = rng.Next(rules.branchMinLen, rules.branchMaxLen + 1);
-            if (TryCreateBranch(baseRoom, baseCell, len))
+            int length = rng.Next(rules.branchMinLen, rules.branchMaxLen + 1);
+            if (TryCreateBranch(baseRoom, baseCell, length))
                 created++;
         }
     }
 
+    /**
+     * Intenta crear la rama a partir de la Room seleccionada
+     */
     private bool TryCreateBranch(Room baseRoom, Vector2Int baseCell, int length)
     {
         Room current = baseRoom;
         Vector2Int currentCell = baseCell;
 
-        // Primer paso: salir desde baseRoom por una dirección libre
+        // Obtenemos una direccion libre de la Room actual
         var firstDirs = GetValidExitDirections(current, currentCell);
         if (firstDirs.Count == 0) return false;
 
         DoorDir dir = firstDirs[rng.Next(0, firstDirs.Count)];
         Vector2Int nextCell = currentCell + DirToOffset(dir);
 
-        // El primer tipo de rama (puede ser Normal/Treasure/Secret)
+        // Elegimos aleatoriamente el tipo de Room y lo intentamos Spawnear un prefab del catalogo
         RoomType firstType = PickBranchType();
         if (!TryPlaceSpecific(current, currentCell, dir, firstType, out Room nextRoom))
             return false;
@@ -142,16 +147,15 @@ public class DungeonGenerator : MonoBehaviour
         current = nextRoom;
         currentCell = nextCell;
 
-        // Continúa la rama (normalmente 0–2 salas)
+        // Intentamos seguir la rama (segun la longitud indicada)
         for (int i = 1; i < length; i++)
         {
-            // Para que se sienta “ramita”, intenta no volver hacia atrás
+            // Obtenemos una nueva direccion libre a partir de la Room spawneada
             var dirs = GetValidExitDirections(current, currentCell);
-            if (dirs.Count == 0) return true; // dead end natural
+            if (dirs.Count == 0) return true;
 
-            // Opcional: filtra el opuesto para no volver a la sala anterior (si hay alternativas)
-            // (Esto evita que la rama haga “zigzag” raro hacia atrás)
-            DoorDir backDir = Opposite(dir); // dir era de la sala anterior hacia esta, así que el backDir te devuelve
+            //FIXME: Eliminar. Lo asumimos, no es necesario...
+            DoorDir backDir = Opposite(dir);
             if (dirs.Count > 1)
                 dirs.Remove(backDir);
 
@@ -162,9 +166,8 @@ public class DungeonGenerator : MonoBehaviour
 
             RoomType t = PickBranchType();
             if (!TryPlaceSpecific(current, currentCell, stepDir, t, out Room stepRoom))
-                return true; // si no puede, la rama termina aquí
+                return true;
 
-            // Avanza
             dir = stepDir;
             current = stepRoom;
             currentCell = stepCell;
@@ -173,7 +176,7 @@ public class DungeonGenerator : MonoBehaviour
         return true;
     }
 
-    // Coloca una sala en una dirección concreta (sin elegir dirección aleatoria)
+    // Coloca una sala en una direccion concreta (sin elegir direccion aleatoria)
     private bool TryPlaceSpecific(Room fromRoom, Vector2Int fromCell, DoorDir dir, RoomType nextType, out Room placedRoom)
     {
         placedRoom = null;
@@ -207,7 +210,7 @@ public class DungeonGenerator : MonoBehaviour
         return false;
     }
 
-    // Camino principal: elige dirección automáticamente según allowed+libre y prefab compatible
+    // Camino principal: elige direccion automaticamente segun allowed+libre y prefab compatible
     private bool TryPlaceNext(Room fromRoom, Vector2Int fromCell, RoomType nextType, out Room placedRoom, out Vector2Int placedCell)
     {
         placedRoom = null;
@@ -249,7 +252,7 @@ public class DungeonGenerator : MonoBehaviour
 
     private List<DoorDir> GetValidExitDirections(Room room, Vector2Int cell)
     {
-        var dirs = new List<DoorDir>(4);
+        List<DoorDir> dirs = new List<DoorDir>(4);
 
         TryAdd(DoorDir.North);
         TryAdd(DoorDir.South);
@@ -268,13 +271,19 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
+    /**
+     * Selecciona y crea un prefab del tipo indicado en la celda indicada
+     */
     private Room SpawnAt(Vector2Int cell, RoomType type)
     {
-        var prefab = PickRandomPrefab(type);
+        GameObject prefab = PickRandomPrefab(type);
         if (!prefab) return null;
         return SpawnPrefabAt(cell, prefab, type);
     }
 
+    /**
+     * Crea el prefab de la habitacion y limpia sus conexiones (cerrar puertas)
+     */
     private Room SpawnPrefabAt(Vector2Int cell, GameObject prefab, RoomType type)
     {
         Vector3 origin = transform.position;
@@ -298,6 +307,9 @@ public class DungeonGenerator : MonoBehaviour
         b.SetConnected(Opposite(dirFromAToB), true);
     }
 
+    /**
+     * Selecciona de forma aleatoria un Prefab del catalogo de Rooms para el RoomType indicado
+     */
     private GameObject PickRandomPrefab(RoomType type)
     {
         var list = catalog ? catalog.GetPrefabs(type) : null;
@@ -309,6 +321,9 @@ public class DungeonGenerator : MonoBehaviour
         return list[rng.Next(0, list.Count)];
     }
 
+    /**
+     * Selecciona una habitacion aleatoria del catalogo, que cumpla con el RoomType y el DoorDir indicados
+     */
     private GameObject PickRandomPrefabThatAllows(RoomType type, DoorDir requiredSide)
     {
         var list = catalog ? catalog.GetPrefabs(type) : null;
@@ -328,6 +343,9 @@ public class DungeonGenerator : MonoBehaviour
         return candidates[rng.Next(0, candidates.Count)];
     }
 
+    /**
+     * Selecciona un tipo de Room usando los pesos definidos en Rules. (tipos disponibles: Normal, Treasure, Secret)
+     */
     private RoomType PickBranchType()
     {
         int wN = Mathf.Max(0, rules.branchWeightNormal);
@@ -371,6 +389,10 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
+    /**
+     * Planifica el Path principal. Es decir, decide el orden y los tipos de habitaciones hasta la salida.
+     * Siempre debe haber una sala del Boss justo antes de la sala Final.
+     */
     private List<RoomType> BuildRoomPlan()
     {
         int remaining = Mathf.Max(0, rules.totalRooms - 1);
@@ -386,7 +408,7 @@ public class DungeonGenerator : MonoBehaviour
         int treasureLeft = rules.maxTreasure;
 
         for (int i = 0; i < remaining; i++)
-            plan.Add(PickFillerType(ref secretLeft, ref treasureLeft));
+            plan.Add(PickMainPathType(ref secretLeft, ref treasureLeft));
 
         for (int i = 0; i < bossToPlace; i++)
             plan.Add(RoomType.Boss);
@@ -397,7 +419,10 @@ public class DungeonGenerator : MonoBehaviour
         return plan;
     }
 
-    private RoomType PickFillerType(ref int secretLeft, ref int treasureLeft)
+    /**
+     * Selecciona un tipo de Room usando los pesos definidos en Rules. (tipos disponibles: Normal, Treasure, Secret)
+     */
+    private RoomType PickMainPathType(ref int secretLeft, ref int treasureLeft)
     {
         int wN = Mathf.Max(0, rules.weightNormal);
         int wT = treasureLeft > 0 ? Mathf.Max(0, rules.weightTreasure) : 0;
@@ -416,7 +441,10 @@ public class DungeonGenerator : MonoBehaviour
         return RoomType.Secret;
     }
 
-    public void Clear()
+    /**
+     * Limpiamos todo por si no es la primera vez que se llama al Generador
+     */
+    public void ClearDungeon()
     {
         placed.Clear();
         spawned.Clear();
@@ -428,9 +456,12 @@ public class DungeonGenerator : MonoBehaviour
             DestroyImmediate(dungeonRoot.GetChild(i).gameObject);
     }
 
+    /**
+     * Intenta instanciar los enemigos de cada Room (usando sus spawnPoints)
+     */
     private void SpawnEnemiesInRooms()
     {
-        foreach (var room in spawned)
+        foreach (Room room in spawned)
         {
             if (room == null) continue;
 
