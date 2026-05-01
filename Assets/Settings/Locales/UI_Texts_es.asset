@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_Texts_es
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 8bced8a4a7b4d414891970eba5161040, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 456763105280
+    m_Localized: Jugar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 463406882816
+    m_Localized: "H\xE9roes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 548802912256
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 629295800320
+    m_Localized: "Cr\xE9ditos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 666444750848
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 916991500288
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 998398746624
+    m_Localized: Juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051343446016
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1085069844480
+    m_Localized: "V\xEDdeo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109195481088
+    m_Localized: Controles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1304851374080
+    m_Localized: Semilla Aleatoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1570061410304
+    m_Localized: Semilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1610762936320
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1662004748288
+    m_Localized: "Vibraci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1767701209088
+    m_Localized: Volumen General
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1902455808000
+    m_Localized: "Volumen M\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2005702795264
+    m_Localized: Volumen Efectos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2095288934400
+    m_Localized: Escudo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2277460140032
+    m_Localized: Ataque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2327758233600
+    m_Localized: Pausa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2366412939264
+    m_Localized: Movimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2552036057088
+    m_Localized: Apuntado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2649612345344
+    m_Localized: "* Tambi\xE9n se puede usar el teclado y el rat\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3288958492672
+    m_Localized: Pausa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3532127461376
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3605573918720
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3680198975488
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3910017474560
+    m_Localized: Conecta un segundo mando para invocar al jugador 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4104096309248
+    m_Localized: Victoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4165966487552
+    m_Localized: Los Vigilantes han prevalecido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4315057217536
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4437224710144
+    m_Localized: Has fracasado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4532045340672
+    m_Localized: "La oscuridad te venci\xF3 esta vez.\nLev\xE1ntate de nuevo, Vigilante."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4705152655360
+    m_Localized: Reintentar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4778943045632
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

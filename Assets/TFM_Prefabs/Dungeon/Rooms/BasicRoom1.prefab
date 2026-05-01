@@ -2136,7 +2136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnPointController
   rule:
-    chance: 1
+    chance: 0.981
     startState: 0
     patrolPathRoot: {fileID: 0}
     enemies:

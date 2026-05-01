@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
@@ -12,6 +13,8 @@ public class MainMenuController : MonoBehaviour
         if (selectedButton == null) return;
 
         EventSystem.current?.SetSelectedGameObject(selectedButton.gameObject);
+
+        SetLocale(PlayerPrefs.GetString("lang", "es"));
     }
 
     public void OpenScene(string name)
@@ -26,5 +29,18 @@ public class MainMenuController : MonoBehaviour
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #endif
+    }
+
+    /**
+     * Modifica el idioma del juego y lo guarda en las preferencias
+     */
+    public void SetLocale(string code)
+    {
+        var locale = LocalizationSettings.AvailableLocales.GetLocale(code);
+        if (locale == null) return;
+         
+        LocalizationSettings.SelectedLocale = locale;
+        PlayerPrefs.SetString("lang", code);
+        PlayerPrefs.Save();
     }
 }
