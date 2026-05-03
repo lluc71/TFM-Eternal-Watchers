@@ -278,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBossController
   weaponSpawnPoint: {fileID: 377323136248178856}
   projectileSpawnPoint: {fileID: 740711273077669810}
-  maxHealth: 150
+  maxHealth: 300
   meleeRange: 3
   meleeDamage: 20
   meleeCooldown: 2.75
@@ -347,13 +347,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6cc629bc5a0c849ad9e4e5ecc598b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponStabBossPhase
-  minHealthPhase: 100
-  maxHealthPhase: 150
+  minHealthPhase: 200
+  maxHealthPhase: 300
   moveSpeed: 3.5
   specialCooldown: 10
   meleeHitbox: {fileID: 2414576872443209638}
   activeTime: 0.2
-  minRange: 3
+  minRange: 1
   maxRange: 9
   damage: 20
 --- !u!114 &6671077453839986913
@@ -369,10 +369,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlamAOEBossPhase
   minHealthPhase: 0
-  maxHealthPhase: 50
+  maxHealthPhase: 100
   moveSpeed: 3.5
-  specialCooldown: 12
-  minRange: 3
+  specialCooldown: 11
+  minRange: 2
   maxRange: 8
   aoeRadius: 3.5
   aoeDamage: 25
@@ -392,11 +392,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac779718365c3ce43ba27f20a98d2f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrowProjectilesBossPhase
-  minHealthPhase: 50
-  maxHealthPhase: 100
+  minHealthPhase: 100
+  maxHealthPhase: 200
   moveSpeed: 3.5
   specialCooldown: 12
-  minRange: 3
+  minRange: 1
   maxRange: 15
   projectilePrefab: {fileID: 3451001683157180159, guid: 980bf4ea083f818498503b52202e3fd9, type: 3}
   projectileCount: 3

@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 1125015048513035970}
   - component: {fileID: 8578150619231832007}
   - component: {fileID: 7522032915542220471}
+  - component: {fileID: 9009521844966333867}
   m_Layer: 8
   m_Name: RogueSkeleton
   m_TagString: Enemy
@@ -227,14 +228,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRogue
   state: 0
-  health: 100
-  detectionRange: 6
-  loseTargetRange: 12
+  health: 80
+  detectionRange: 7
+  loseTargetRange: 13
   usePatrol: 0
   patrolPoints: []
   patrolWaitTime: 2
   attackCooldown: 2
-  damage: 10
+  damage: 15
   canMelee: 1
   meleeRange: 2
   canRanged: 0
@@ -297,6 +298,29 @@ NavMeshAgent:
   m_BaseOffset: -0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!136 &9009521844966333867
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404000101795920859}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &499849650350846131
 GameObject:
   m_ObjectHideFlags: 0

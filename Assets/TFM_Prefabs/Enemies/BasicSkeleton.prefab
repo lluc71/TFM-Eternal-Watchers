@@ -1854,6 +1854,7 @@ GameObject:
   - component: {fileID: 1387044553328535796}
   - component: {fileID: 7832252127188533606}
   - component: {fileID: 7373106542428637903}
+  - component: {fileID: 3551454947720029900}
   m_Layer: 8
   m_Name: BasicSkeleton
   m_TagString: Enemy
@@ -1921,16 +1922,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBasic
   state: 0
-  health: 100
+  health: 80
   detectionRange: 6
-  loseTargetRange: 10
+  loseTargetRange: 12
   usePatrol: 0
   patrolPoints: []
   patrolWaitTime: 2
   attackCooldown: 1.75
+  damage: 10
   canMelee: 1
   meleeRange: 2
-  meleeDamage: 10
   canRanged: 0
   rangedRange: 6
   attackWindup: 0.5
@@ -1939,6 +1940,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   shootPoint: {fileID: 0}
   projectileSpeed: 10
+  rangedWindup: 0.35
+  retargetInterval: 0.5
+  retargetSwitchBias: 0.75
 --- !u!136 &7832252127188533606
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1984,6 +1988,29 @@ NavMeshAgent:
   m_BaseOffset: -0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!136 &3551454947720029900
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9036194338941084516}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &9199747061834356263
 GameObject:
   m_ObjectHideFlags: 0
