@@ -290,6 +290,8 @@ MonoBehaviour:
   - {fileID: 2335670963094953777}
   - {fileID: 5115032368611851747}
   - {fileID: 6671077453839986913}
+  musicBoss: {fileID: 8300000, guid: a912cb6a5644d7b43b5dfab403f507b1, type: 3}
+  musicAfterDeath: {fileID: 8300000, guid: 6c51e475c2b55f04ab9156c851a1f7f7, type: 3}
 --- !u!136 &3973255007493707360
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -376,7 +378,7 @@ MonoBehaviour:
   maxRange: 8
   aoeRadius: 3.5
   aoeDamage: 25
-  aoeVfxPrefab: {fileID: 173972, guid: dadd1929e4ac43047b16074d7bcb5ee6, type: 3}
+  aoeVfxPrefab: {fileID: 6002728691102790510, guid: 77a36a1d30990104db2302b007dcf4c8, type: 3}
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 128

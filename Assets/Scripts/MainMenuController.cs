@@ -14,7 +14,7 @@ public class MainMenuController : MonoBehaviour
 
         EventSystem.current?.SetSelectedGameObject(selectedButton.gameObject);
 
-        SetLocale(PlayerPrefs.GetString("lang", "es"));
+        SetLocale(PlayerPrefs.GetString(PlayerPrefsKeys.Language, "es"));
     }
 
     public void OpenScene(string name)
@@ -40,7 +40,7 @@ public class MainMenuController : MonoBehaviour
         if (locale == null) return;
          
         LocalizationSettings.SelectedLocale = locale;
-        PlayerPrefs.SetString("lang", code);
+        PlayerPrefs.SetString(PlayerPrefsKeys.Language, code);
         PlayerPrefs.Save();
     }
 }

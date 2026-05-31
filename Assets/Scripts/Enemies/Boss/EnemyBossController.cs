@@ -30,6 +30,10 @@ public class EnemyBossController : MonoBehaviour
     [Header("Phases")]
     [SerializeField] private BossPhaseBase[] phases;
 
+    [Header("Music")]
+    [SerializeField] private AudioClip musicBoss;
+    [SerializeField] private AudioClip musicAfterDeath;
+
     private NavMeshAgent agent;
     private Animator animator;
     private GUIBossInfo bossInfoGUI;
@@ -66,6 +70,8 @@ public class EnemyBossController : MonoBehaviour
         meleeHitbox?.Initialize(meleeDamage);
 
         GUIManager.Instance.RegisterBoss(this);
+
+        MusicManager.Instance.PlayMusic(musicBoss);
     }
 
     private void Update()
@@ -344,6 +350,7 @@ public class EnemyBossController : MonoBehaviour
         }
 
         animator.SetTrigger("Die");
+        MusicManager.Instance.PlayMusic(musicAfterDeath);
     }
 
     public void SetBossInfoGUI(GUIBossInfo panel)

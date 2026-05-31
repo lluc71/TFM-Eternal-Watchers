@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 109900249}
   - component: {fileID: 109900250}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: MusicSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,12 +564,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 847377924}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
-  m_WholeNumbers: 1
-  m_Value: 100
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1935991911}
+        m_TargetAssemblyTypeName: SetSettingsController, Assembly-CSharp
+        m_MethodName: SetMusicVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &112809322
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,7 +2315,7 @@ GameObject:
   - component: {fileID: 535058292}
   - component: {fileID: 535058291}
   m_Layer: 5
-  m_Name: Focus
+  m_Name: EnglishFocus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7236,7 +7248,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1935991911}
+        m_TargetAssemblyTypeName: SetSettingsController, Assembly-CSharp
+        m_MethodName: SetRandomSeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!114 &1402035668
 MonoBehaviour:
@@ -7894,7 +7918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1503549264
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7913,9 +7937,9 @@ RectTransform:
   - {fileID: 1765509884}
   m_Father: {fileID: 291804912}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 735, y: -480}
   m_SizeDelta: {x: 1450, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1503549265
@@ -10144,6 +10168,7 @@ GameObject:
   - component: {fileID: 1935991909}
   - component: {fileID: 1935991908}
   - component: {fileID: 1935991910}
+  - component: {fileID: 1935991911}
   m_Layer: 0
   m_Name: SettingsController
   m_TagString: Untagged
@@ -10207,6 +10232,23 @@ MonoBehaviour:
     tabFocus: {fileID: 1465758267}
     contentPanel: {fileID: 1946463986}
     firstSelectedInPanel: {fileID: 1038983906}
+--- !u!114 &1935991911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935991907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb254de2c6dd934fa6b937905c81c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetSettingsController
+  randomSeedToggle: {fileID: 1402035667}
+  seedInputField: {fileID: 2030624015}
+  spanishFocus: {fileID: 2016781592}
+  englishFocus: {fileID: 535058289}
+  musicVolumeSlider: {fileID: 109900250}
 --- !u!1 &1944996324
 GameObject:
   m_ObjectHideFlags: 0
@@ -10474,7 +10516,7 @@ GameObject:
   - component: {fileID: 2016781595}
   - component: {fileID: 2016781594}
   m_Layer: 5
-  m_Name: Focus
+  m_Name: SpanishFocus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10864,7 +10906,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1935991911}
+        m_TargetAssemblyTypeName: SetSettingsController, Assembly-CSharp
+        m_MethodName: SetSeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
